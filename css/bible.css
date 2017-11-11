@@ -1,0 +1,13 @@
+.dailyVersesWrapper a
+{
+	
+    color:#000; 
+    font-weight:bold;
+}
+
+.dailyVerses.linkToWebsite a
+{
+    color:#999; 
+    font-size:12px;
+    text-decoration:none;
+}

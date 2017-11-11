@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>
+        <script type='text/javascript' src="xml2json.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+        <script type='text/javascript'>
+
+        var text = "";
+        var x2js = new X2JS();
+
+        $("#convertToJsonBtn").click(convertXml2JSon);
+
+        var openFile = function(event) {
+            var input = event.target;
+            var reader = new FileReader();
+            reader.onload = function(){
+                text = reader.result;
+                $("#xmlArea").val(text);
+            };
+            reader.readAsText(input.files[0]);
+        };
+        function buildSvg(names, position, conector, type, ors, xors, dimension){
+            var svgPrint = document.getElementById('svgcanvas');
+            svgPrint.innerHTML="";
+            dimension = dimension.split(":");
+            let xd = dimension[2].split("y");
+            let yd = dimension[3].split("w");
+            let wd = dimension[4].split("h");
+            let hd = dimension[5].split("scale");
+            console.log(xd + " " + yd + " " + wd + " " + hd);
+            var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            svg.setAttribute('xlink','http://www.w3.org/1999/xlink');
+            svg.setAttribute('width',wd[0]*55);
+            svg.setAttribute('height',hd[0]*55);
+            svg.setAttribute('x',xd[0]*55);
+            svg.setAttribute('y',yd[0]*55);
+
+            var conectores = new Array(conector.length);
+            var cors = new Array(ors.length);
+            var cxors = new Array(xors.length);
+            
+            for (var i = 0; i < conectores.length; i++) {
+                conectores[i] = new Array(4);
+            }
+            for (var i = 0; i < ors.length; i++) {
+                cors[i] = new Array(4);
+                cors[i][0] = ors[i]; 
+                cors[i][1] = ""; 
+                cors[i][2] = ""; 
+                cors[i][3] = ""; 
+            }
+            for (var i = 0; i < xors.length; i++) {
+                cxors[i] = new Array(4);
+                cxors[i][0] = xors[i]; 
+                cxors[i][1] = ""; 
+                cxors[i][2] = ""; 
+                cxors[i][3] = ""; 
+            }
+            var bander = 0;
+            for (var i = 0; i < names.length; i++) { 
+                
+                var name = names[i].split(":"); 
+                         
+                var pos = position[i].split(":");
+                var xcm = pos[1].split("cm", 1);
+                var ycm = pos[2].split("cm", 1); 
+                var x = 55 * parseInt(xcm);
+                var y = 55 * parseInt(ycm);
+                var rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                rect.setAttribute('width', '150');
+                rect.setAttribute('height','50');
+                rect.setAttribute('fill','white');
+                rect.setAttribute('stroke','black');
+                rect.setAttribute('stroke-width','2');
+                rect.setAttribute('rx','2');
+                rect.setAttribute('x',x);
+                rect.setAttribute('y',y);
+                
+                var text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                text.setAttribute('x', x + 18);
+                text.setAttribute('y', y + 25);
+                text.setAttribute('fill', 'black');
+                text.textContent = name[0];
+                
+                for (var j = 0; j < conector.length; j++) {
+                    var optional = type[j].toString().localeCompare("Optional");
+                    var obligatorio = type[j].toString().localeCompare("Mandatory");
+                    var or = type[j].toString().localeCompare("OR");
+                    var xor = type[j].toString().localeCompare("XOR");
+                    var line = document.createElementNS('http://www.w3.org/2000/svg', 'line');  
+                    var texto = conector[j].split(":");
+                    if (i==names.length-1) {
+                        console.log(texto);     
+                    }
+                    
+                    var compareFrom = texto[1].toString().localeCompare(name[0]);   
+                    var compareTo = texto[3].toString().localeCompare(name[0]);                   
+                    if ((optional==0)||(obligatorio==0)) {                                            
+                        
+                        if(compareFrom==0){
+                            conectores[j][2] = 1;
+                            conectores[j][0] = x + ":" + y;
+                            conectores[j][3] = type[j];
+                        }
+                       
+                        if(compareTo==0){
+                            conectores[j][2] += 2;
+                            conectores[j][1] = x + ":" + y;
+                        }
+                        if((conectores[j][2]==3)&&(i==(names.length-1))){                       
+                            var circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');                            
+                            var x1 = conectores[j][0].split(":");
+                            var x2 = conectores[j][1].split(":");
+                            line.setAttribute('x1', parseInt(x1[0])+50);
+                            line.setAttribute('y1', parseInt(x1[1])+50);
+                            line.setAttribute('x2', parseInt(x2[0])+50);
+                            line.setAttribute('y2', parseInt(x2[1])-10);
+                            line.setAttribute('stroke-width', 5);
+                            line.setAttribute('stroke', "black");
+
+                            if(obligatorio==0){
+                                circle.setAttribute('cx', parseInt(x2[0])+50);
+                                circle.setAttribute('cy', parseInt(x2[1])-10);
+                                circle.setAttribute('r', 10);  
+                                circle.setAttribute('stroke', "black");
+                                circle.setAttribute('stroke-width', 3);
+                                circle.setAttribute('fill', 'black');
+                            }
+                            if(optional==0){
+                                circle.setAttribute('cx', parseInt(x2[0])+50);
+                                circle.setAttribute('cy', parseInt(x2[1])-10);
+                                circle.setAttribute('r', 10);  
+                                circle.setAttribute('stroke', "black");
+                                circle.setAttribute('stroke-width', 3);
+                                circle.setAttribute('fill', 'white');
+                            }
+                            svg.appendChild(line);
+                            svg.appendChild(circle);
+                        } 
+                    }
+                    if ((or==0)||(xor==0)) {                   
+
+                        if(compareFrom==0){
+                            bander++;
+                            //console.log("flag: " + bander + " - " + texto[1] + " //// " + texto[3]);
+                            conectores[j][2] += 1;
+                            conectores[j][0] = x + ":" + y;
+                            conectores[j][3] = type[j];
+                        }
+                        if(compareTo==0){
+                            conectores[j][1] = x + ":" + y;
+                        }                                             
+                        if((xor==0)&&(i==(names.length-1))){
+                            var x1 = conectores[j][0].split(":");
+                            var x2 = conectores[j][1].split(":");
+                            line.setAttribute('x1', parseInt(x1[0])+50);
+                            line.setAttribute('y1', parseInt(x1[1])+50);
+                            line.setAttribute('x2', parseInt(x2[0])+50);
+                            line.setAttribute('y2', parseInt(x2[1]));
+                            line.setAttribute('stroke-width', 5);
+                            line.setAttribute('stroke', "black");
+                            svg.appendChild(line);
+                            for (var v = 0; v < cxors.length; v++) {
+                                for (var m = 0; m < names.length; m++) {
+                                    var nombre = names[m].split(":"); 
+                                    var element = cxors[v][0].toString().localeCompare(nombre[0]);
+                                    if (element==0) {
+                                        if(cxors[v][1].length==0){
+                                            cxors[v][1] = (parseInt(x1[0])+50) + ":" + (parseInt(x1[1])+50);
+                                            var xIzq = (((parseInt(x1[0])+50) - (parseInt(x2[0])+50))/2)+parseInt(x2[0])+50;
+                                            var yIzq = (((parseInt(x2[1]))-(parseInt(x1[1])+50))/2)+parseInt(x1[1])+50;
+                                            cxors[v][2] = xIzq + ":" + yIzq;
+                                        }else{
+                                            var xDer = (((parseInt(x2[0])+50) - (parseInt(x1[0])+50))/2)+parseInt(x1[0])+50;
+                                            var yDer = (((parseInt(x2[1]))-(parseInt(x1[1])+50))/2)+(parseInt(x1[1])+50);
+                                            cxors[v][3] = xDer + ":" + yDer;
+                                        }                                    
+                                        if (cxors[v][3].length>0) {                                     
+                                            var arista1 = cxors[v][1].split(":");
+                                            var arista2 = cxors[v][2].split(":");
+                                            var arista3 = cxors[v][3].split(":");
+                                            var polygon = document.createElementNS('http://www.w3.org/2000/svg','polygon');
+                                            polygon.setAttribute("points", arista1[0]+ "," + arista1[1] + " " + arista2[0]+","+arista2[1]+" "+arista3[0]+","+ arista3[1]);
+                                            polygon.setAttribute('stroke', "black");
+                                            polygon.setAttribute('stroke-width', 3);
+                                            polygon.setAttribute('fill', 'black');
+                                            svg.appendChild(polygon);
+                                        
+                                        }
+                                    }  
+                                }                                                              
+                            }  
+                        }
+                        if((or==0)&&(i==(names.length-1))){
+                            var x1 = conectores[j][0].split(":");
+                            var x2 = conectores[j][1].split(":");
+                            line.setAttribute('x1', parseInt(x1[0])+50);
+                            line.setAttribute('y1', parseInt(x1[1])+50);
+                            line.setAttribute('x2', parseInt(x2[0])+50);
+                            line.setAttribute('y2', parseInt(x2[1]));
+                            line.setAttribute('stroke-width', 5);
+                            line.setAttribute('stroke', "black");
+                            svg.appendChild(line);
+                            for (var v = 0; v < cors.length; v++) {
+                                for (var m = 0; m < names.length; m++) {
+                                    var nombre = names[m].split(":"); 
+                                    var element = cors[v][0].toString().localeCompare(nombre[0]);
+                                    if (element==0) {
+                                        if(cors[v][1].length==0){
+                                            cors[v][1] = (parseInt(x1[0])+50) + ":" + (parseInt(x1[1])+50);
+                                            var xIzq = (((parseInt(x1[0])+50) - (parseInt(x2[0])+50))/2)+parseInt(x2[0])+50;
+                                            var yIzq = (((parseInt(x2[1]))-(parseInt(x1[1])+50))/2)+parseInt(x1[1])+50;
+                                            cors[v][2] = xIzq + ":" + yIzq;
+                                        }else{
+                                            var xDer = (((parseInt(x2[0])+50) - (parseInt(x1[0])+50))/2)+parseInt(x1[0])+50;
+                                            var yDer = (((parseInt(x2[1]))-(parseInt(x1[1])+50))/2)+(parseInt(x1[1])+50);
+                                            cors[v][3] = xDer + ":" + yDer;
+                                        }                                    
+                                        if (cors[v][3].length>0) {                                     
+                                            var arista1 = cors[v][1].split(":");
+                                            var arista2 = cors[v][2].split(":");
+                                            var arista3 = cors[v][3].split(":");
+                                            var polygon = document.createElementNS('http://www.w3.org/2000/svg','polygon');
+                                            polygon.setAttribute("points", arista1[0]+ "," + arista1[1] + " " + arista2[0]+","+arista2[1]+" "+arista3[0]+","+ arista3[1]);
+                                            polygon.setAttribute('stroke', "black");
+                                            polygon.setAttribute('stroke-width', 3);
+                                            polygon.setAttribute('fill', 'white');
+                                            svg.appendChild(polygon);
+                                        
+                                        }
+                                    }  
+                                }                                                              
+                            }  
+                        }
+                    }
+                }               
+                svg.appendChild(rect);
+                svg.appendChild(text);
+                svgPrint.appendChild(svg);
+
+            }
+        };
+        function getSvg(){
+            svgStringData = $(svgcanvas).html() 
+            $("#jsonArea2").val("" + svgStringData);    
+            console.log(svgStringData);
+            
+        };
+        function convertXml2JSon() {
+            var xml = JSON.stringify(x2js.xml_str2json($("#xmlArea").val()));
+            $("#jsonArea").val(xml);
+            var obj = JSON.parse(xml);
+            var instances = [];
+            var position = [];
+            var ors = [];
+            var xors = [];
+            var type = [];
+            var conector = [];
+            var names = ""; 
+            var dimension = "";
+            dimension = obj.ADOXML.MODELS.MODEL.MODELATTRIBUTES.ATTRIBUTE[16].__text +"";
+            for (var i = 0; i < obj.ADOXML.MODELS.MODEL.INSTANCE.length; i++) {
+                instances [i]= obj.ADOXML.MODELS.MODEL.INSTANCE[i]._name+":"+obj.ADOXML.MODELS.MODEL.INSTANCE[i]._id;
+                var tipo = obj.ADOXML.MODELS.MODEL.INSTANCE[i].ATTRIBUTE[6].__text+"";
+                var or = tipo.localeCompare("OR");
+                var xor = tipo.localeCompare("XOR");
+                if (or==0) {
+                    for (var ins = 0; ins < instances.length; ins++) {
+                        var element = instances[ins].split(":");
+                        var id = element[1].split(".");
+                        var flag = id[1].localeCompare(obj.ADOXML.MODELS.MODEL.INSTANCE[i].ATTRIBUTE[5].__text);
+                        if (flag==0) {
+                            ors.push(element[0]);
+                        }
+                    }                    
+                }else if (xor==0) {
+                    for (var ins = 0; ins < instances.length; ins++) {
+                        var element = instances[ins].split(":");
+                        var id = element[1].split(".");
+                        var flag = id[1].localeCompare(obj.ADOXML.MODELS.MODEL.INSTANCE[i].ATTRIBUTE[5].__text);
+                        if (flag==0) {
+                            xors.push(element[0]);
+                        }
+                    }    
+                }
+                position[i] = obj.ADOXML.MODELS.MODEL.INSTANCE[i].ATTRIBUTE[0].__text;      
+            }
+            ors = ors.filter((x, i, a) => a.indexOf(x) == i);
+            xors = xors.filter((x, i, a) => a.indexOf(x) == i);
+
+            for (var i = 0; i < obj.ADOXML.MODELS.MODEL.CONNECTOR.length; i++) {
+                conector[i] = "From:" + obj.ADOXML.MODELS.MODEL.CONNECTOR[i].FROM._instance + ":To:" + obj.ADOXML.MODELS.MODEL.CONNECTOR[i].TO._instance;
+                type[i] = obj.ADOXML.MODELS.MODEL.CONNECTOR[i]._class;
+                names += conector[i] + " ";
+            }
+            $("#jsonArea2").val("" + instances + " " + position + " " + type);
+            buildSvg(instances,position, conector, type, ors,xors,dimension);
+        }
+
+    </script>
+</head>
+<body>
+    <h1>XmltoSvg Prototype</h1>
+    <p>Seleccionar archivo XML</p>
+    <input type='file' accept='text/xml' onchange='openFile(event)'><br>
+    <button onclick="getSvg()"> Get svg</button>
+    <button onclick="convertXml2JSon()"> XML-JSON</button>
+    <div class="row">
+        <div class="col">
+            <h4>XML:</h4>
+            <textarea id="xmlArea" cols="55" rows="7"><?xml version="1.0" encoding="UTF-8"?>
+                <!DOCTYPE ADOXML SYSTEM "adoxml31.dtd">
+                <ADOXML version="3.1" date="13.10.2017" time="16:44" database="adb" username="user" adoversion="Version 5.1">
+                <MODELS>
+                <MODEL id="mod.11201" name="Feature Model - new" version="" modeltype="Feature Model" libtype="bp" applib="FMxx Dynamic Experimentation Library">
+                <MODELATTRIBUTES>
+                <ATTRIBUTE name="Version number" type="STRING"></ATTRIBUTE>
+                <ATTRIBUTE name="Author" type="STRING">user</ATTRIBUTE>
+                <ATTRIBUTE name="Creation date" type="STRING">04.10.2017, 15:40</ATTRIBUTE>
+                <ATTRIBUTE name="Date last changed" type="STRING">13.10.2017, 16:39:32</ATTRIBUTE>
+                <ATTRIBUTE name="Last user" type="STRING">user</ATTRIBUTE>
+                <ATTRIBUTE name="Keywords" type="STRING"></ATTRIBUTE>
+                <ATTRIBUTE name="Comment" type="STRING"></ATTRIBUTE>
+                <ATTRIBUTE name="Model type" type="ENUMERATION">Current model</ATTRIBUTE>
+                <ATTRIBUTE name="State" type="ENUMERATION">In process</ATTRIBUTE>
+                <ATTRIBUTE name="Reviewed on" type="STRING"></ATTRIBUTE>
+                <ATTRIBUTE name="Reviewed by" type="STRING"></ATTRIBUTE>
+                <ATTRIBUTE name="Description" type="STRING"></ATTRIBUTE>
+                <ATTRIBUTE name="Number of objects and relations" type="INTEGER">33</ATTRIBUTE>
+                <ATTRIBUTE name="World area" type="STRING">w:31.38cm h:25cm minw:5cm minh:5cm</ATTRIBUTE>
+                <ATTRIBUTE name="Grid" type="STRING"></ATTRIBUTE>
+                <ATTRIBUTE name="Zoom" type="INTEGER">100</ATTRIBUTE>
+                <ATTRIBUTE name="Viewable area" type="STRING">VIEW representation:graphic
+                GRAPHIC x:-16 y:12 w:1377 h:949 scale:1
+                TABLE
+                </ATTRIBUTE>
+                <ATTRIBUTE name="Current mode" type="STRING"></ATTRIBUTE>
+                <ATTRIBUTE name="Base name" type="STRING">Feature Model - new</ATTRIBUTE>
+                <ATTRIBUTE name="Access state" type="ENUMERATION">write</ATTRIBUTE>
+                <ATTRIBUTE name="Current page layout" type="STRING"></ATTRIBUTE>
+                <ATTRIBUTE name="Connector marks" type="STRING"></ATTRIBUTE>
+                <ATTRIBUTE name="Type" type="STRING">Feature Model</ATTRIBUTE>
+                <ATTRIBUTE name="Change counter" type="INTEGER">376</ATTRIBUTE>
+                <ATTRIBUTE name="Font size" type="INTEGER">0</ATTRIBUTE>
+                <ATTRIBUTE name="Context of version" type="STRING"></ATTRIBUTE>
+                <ATTRIBUTE name="Position" type="STRING"></ATTRIBUTE>
+                <ATTRIBUTE name="External tool coupling" type="STRING"></ATTRIBUTE>
+                <ATTRIBUTE name="__GfxThumb__" type="LONGSTRING">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</ATTRIBUTE>
+                </MODELATTRIBUTES>
+                <INSTANCE id="obj.11203" class="Feature" name="Mobil Phone">
+                <ATTRIBUTE name="Position" type="STRING">NODE x:11.5cm y:2cm index:1</ATTRIBUTE>
+                <ATTRIBUTE name="External tool coupling" type="STRING"></ATTRIBUTE>
+                <ATTRIBUTE name="root" type="INTEGER">0</ATTRIBUTE>
+                <ATTRIBUTE name="descendants" type="EXPRESSION">EXPR expr:(&quot;&quot;) val:&quot;&quot;</ATTRIBUTE>
+                <ATTRIBUTE name="ancestors" type="STRING"></ATTRIBUTE>
+                <ATTRIBUTE name="fatherid" type="STRING">-1</ATTRIBUTE>
+                <ATTRIBUTE name="type" type="STRING">normal</ATTRIBUTE>
+                </INSTANCE>
+                <INSTANCE id="obj.11206" class="Feature" name="Media">
+                <ATTRIBUTE name="Position" type="STRING">NODE x:18.5cm y:4.5cm index:2</ATTRIBUTE>
+                <ATTRIBUTE name="External tool coupling" type="STRING"></ATTRIBUTE>
+                <ATTRIBUTE name="root" type="INTEGER">0</ATTRIBUTE>
+                <ATTRIBUTE name="descendants" type="EXPRESSION">EXPR expr:(&quot;&quot;) val:&quot;&quot;</ATTRIBUTE>
+                <ATTRIBUTE name="ancestors" type="STRING">11203 </ATTRIBUTE>
+                <ATTRIBUTE name="fatherid" type="STRING">11203</ATTRIBUTE>
+                <ATTRIBUTE name="type" type="STRING">Optional</ATTRIBUTE>
+                </INSTANCE>
+                <INSTANCE id="obj.11209" class="Feature" name="Screen">
+                <ATTRIBUTE name="Position" type="STRING">NODE x:12cm y:5cm index:3</ATTRIBUTE>
+                <ATTRIBUTE name="External tool coupling" type="STRING"></ATTRIBUTE>
+                <ATTRIBUTE name="root" type="INTEGER">0</ATTRIBUTE>
+                <ATTRIBUTE name="descendants" type="EXPRESSION">EXPR expr:(&quot;&quot;) val:&quot;&quot;</ATTRIBUTE>
+                <ATTRIBUTE name="ancestors" type="STRING">11203 </ATTRIBUTE>
+                <ATTRIBUTE name="fatherid" type="STRING">11203</ATTRIBUTE>
+                <ATTRIBUTE name="type" type="STRING">Mandatory</ATTRIBUTE>
+                </INSTANCE>
+                <INSTANCE id="obj.11212" class="Feature" name="MP3">
+                <ATTRIBUTE name="Position" type="STRING">NODE x:17cm y:7cm index:4</ATTRIBUTE>
+                <ATTRIBUTE name="External tool coupling" type="STRING"></ATTRIBUTE>
+                <ATTRIBUTE name="root" type="INTEGER">0</ATTRIBUTE>
+                <ATTRIBUTE name="descendants" type="EXPRESSION">EXPR expr:(&quot;&quot;) val:&quot;&quot;</ATTRIBUTE>
+                <ATTRIBUTE name="ancestors" type="STRING">11206 </ATTRIBUTE>
+                <ATTRIBUTE name="fatherid" type="STRING">11206</ATTRIBUTE>
+                <ATTRIBUTE name="type" type="STRING">OR</ATTRIBUTE>
+                </INSTANCE>
+                <INSTANCE id="obj.11215" class="Feature" name="Basic">
+                <ATTRIBUTE name="Position" type="STRING">NODE x:8.5cm y:9.5cm index:5</ATTRIBUTE>
+                <ATTRIBUTE name="External tool coupling" type="STRING"></ATTRIBUTE>
+                <ATTRIBUTE name="root" type="INTEGER">0</ATTRIBUTE>
+                <ATTRIBUTE name="descendants" type="EXPRESSION">EXPR expr:(&quot;&quot;) val:&quot;&quot;</ATTRIBUTE>
+                <ATTRIBUTE name="ancestors" type="STRING">11209 </ATTRIBUTE>
+                <ATTRIBUTE name="fatherid" type="STRING">11209</ATTRIBUTE>
+                <ATTRIBUTE name="type" type="STRING">XOR</ATTRIBUTE>
+                </INSTANCE>
+                <INSTANCE id="obj.11218" class="Feature" name="Color">
+                <ATTRIBUTE name="Position" type="STRING">NODE x:12cm y:9.5cm index:6</ATTRIBUTE>
+                <ATTRIBUTE name="External tool coupling" type="STRING"></ATTRIBUTE>
+                <ATTRIBUTE name="root" type="INTEGER">0</ATTRIBUTE>
+                <ATTRIBUTE name="descendants" type="EXPRESSION">EXPR expr:(&quot;&quot;) val:&quot;&quot;</ATTRIBUTE>
+                <ATTRIBUTE name="ancestors" type="STRING">11209 </ATTRIBUTE>
+                <ATTRIBUTE name="fatherid" type="STRING">11209</ATTRIBUTE>
+                <ATTRIBUTE name="type" type="STRING">XOR</ATTRIBUTE>
+                </INSTANCE>
+                <INSTANCE id="obj.11221" class="Feature" name="High Res">
+                <ATTRIBUTE name="Position" type="STRING">NODE x:15.5cm y:9.5cm index:7</ATTRIBUTE>
+                <ATTRIBUTE name="External tool coupling" type="STRING"></ATTRIBUTE>
+                <ATTRIBUTE name="root" type="INTEGER">0</ATTRIBUTE>
+                <ATTRIBUTE name="descendants" type="EXPRESSION">EXPR expr:(&quot;&quot;) val:&quot;&quot;</ATTRIBUTE>
+                <ATTRIBUTE name="ancestors" type="STRING">11418 </ATTRIBUTE>
+                <ATTRIBUTE name="fatherid" type="STRING">11418</ATTRIBUTE>
+                <ATTRIBUTE name="type" type="STRING">XOR</ATTRIBUTE>
+                </INSTANCE>
+                <INSTANCE id="obj.11224" class="Feature" name="Camera">
+                <ATTRIBUTE name="Position" type="STRING">NODE x:22cm y:8cm index:8</ATTRIBUTE>
+                <ATTRIBUTE name="External tool coupling" type="STRING"></ATTRIBUTE>
+                <ATTRIBUTE name="root" type="INTEGER">0</ATTRIBUTE>
+                <ATTRIBUTE name="descendants" type="EXPRESSION">EXPR expr:(&quot;&quot;) val:&quot;&quot;</ATTRIBUTE>
+                <ATTRIBUTE name="ancestors" type="STRING">11409 </ATTRIBUTE>
+                <ATTRIBUTE name="fatherid" type="STRING">11409</ATTRIBUTE>
+                <ATTRIBUTE name="type" type="STRING">XOR</ATTRIBUTE>
+                </INSTANCE>
+                <INSTANCE id="obj.11227" class="Feature" name="Call">
+                <ATTRIBUTE name="Position" type="STRING">NODE x:3.5cm y:5cm index:9</ATTRIBUTE>
+                <ATTRIBUTE name="External tool coupling" type="STRING"></ATTRIBUTE>
+                <ATTRIBUTE name="root" type="INTEGER">0</ATTRIBUTE>
+                <ATTRIBUTE name="descendants" type="EXPRESSION">EXPR expr:(&quot;&quot;) val:&quot;&quot;</ATTRIBUTE>
+                <ATTRIBUTE name="ancestors" type="STRING">11203 </ATTRIBUTE>
+                <ATTRIBUTE name="fatherid" type="STRING">11203</ATTRIBUTE>
+                <ATTRIBUTE name="type" type="STRING">Mandatory</ATTRIBUTE>
+                </INSTANCE>
+                <INSTANCE id="obj.11230" class="Feature" name="GPS">
+                <ATTRIBUTE name="Position" type="STRING">NODE x:7.5cm y:5cm index:10</ATTRIBUTE>
+                <ATTRIBUTE name="External tool coupling" type="STRING"></ATTRIBUTE>
+                <ATTRIBUTE name="root" type="INTEGER">0</ATTRIBUTE>
+                <ATTRIBUTE name="descendants" type="EXPRESSION">EXPR expr:(&quot;&quot;) val:&quot;&quot;</ATTRIBUTE>
+                <ATTRIBUTE name="ancestors" type="STRING">11203 </ATTRIBUTE>
+                <ATTRIBUTE name="fatherid" type="STRING">11203</ATTRIBUTE>
+                <ATTRIBUTE name="type" type="STRING">Optional</ATTRIBUTE>
+                </INSTANCE>
+                <INSTANCE id="obj.11400" class="Feature" name="Single">
+                <ATTRIBUTE name="Position" type="STRING">NODE x:20cm y:11cm index:22</ATTRIBUTE>
+                <ATTRIBUTE name="External tool coupling" type="STRING"></ATTRIBUTE>
+                <ATTRIBUTE name="root" type="INTEGER">0</ATTRIBUTE>
+                <ATTRIBUTE name="descendants" type="EXPRESSION">EXPR expr:(&quot;&quot;) val:&quot;&quot;</ATTRIBUTE>
+                <ATTRIBUTE name="ancestors" type="STRING"></ATTRIBUTE>
+                <ATTRIBUTE name="fatherid" type="STRING">-1</ATTRIBUTE>
+                <ATTRIBUTE name="type" type="STRING">normal</ATTRIBUTE>
+                </INSTANCE>
+                <INSTANCE id="obj.11403" class="Feature" name="4K">
+                <ATTRIBUTE name="Position" type="STRING">NODE x:17cm y:12.5cm index:23</ATTRIBUTE>
+                <ATTRIBUTE name="External tool coupling" type="STRING"></ATTRIBUTE>
+                <ATTRIBUTE name="root" type="INTEGER">0</ATTRIBUTE>
+                <ATTRIBUTE name="descendants" type="EXPRESSION">EXPR expr:(&quot;&quot;) val:&quot;&quot;</ATTRIBUTE>
+                <ATTRIBUTE name="ancestors" type="STRING"></ATTRIBUTE>
+                <ATTRIBUTE name="fatherid" type="STRING">-1</ATTRIBUTE>
+                <ATTRIBUTE name="type" type="STRING">normal</ATTRIBUTE>
+                </INSTANCE>
+                <INSTANCE id="obj.11409" class="Feature" name="Dual">
+                <ATTRIBUTE name="Position" type="STRING">NODE x:24cm y:11cm index:25</ATTRIBUTE>
+                <ATTRIBUTE name="External tool coupling" type="STRING"></ATTRIBUTE>
+                <ATTRIBUTE name="root" type="INTEGER">0</ATTRIBUTE>
+                <ATTRIBUTE name="descendants" type="EXPRESSION">EXPR expr:(&quot;&quot;) val:&quot;&quot;</ATTRIBUTE>
+                <ATTRIBUTE name="ancestors" type="STRING"></ATTRIBUTE>
+                <ATTRIBUTE name="fatherid" type="STRING">-1</ATTRIBUTE>
+                <ATTRIBUTE name="type" type="STRING">normal</ATTRIBUTE>
+                </INSTANCE>
+                <INSTANCE id="obj.11418" class="Feature" name="FULLHD">
+                <ATTRIBUTE name="Position" type="STRING">NODE x:13.5cm y:12.5cm index:28</ATTRIBUTE>
+                <ATTRIBUTE name="External tool coupling" type="STRING"></ATTRIBUTE>
+                <ATTRIBUTE name="root" type="INTEGER">0</ATTRIBUTE>
+                <ATTRIBUTE name="descendants" type="EXPRESSION">EXPR expr:(&quot;&quot;) val:&quot;&quot;</ATTRIBUTE>
+                <ATTRIBUTE name="ancestors" type="STRING"></ATTRIBUTE>
+                <ATTRIBUTE name="fatherid" type="STRING">-1</ATTRIBUTE>
+                <ATTRIBUTE name="type" type="STRING">normal</ATTRIBUTE>
+                </INSTANCE>
+                <INSTANCE id="obj.11604" class="Feature" name="F1.7">
+                <ATTRIBUTE name="Position" type="STRING">NODE x:22cm y:14.5cm index:35</ATTRIBUTE>
+                <ATTRIBUTE name="External tool coupling" type="STRING"></ATTRIBUTE>
+                <ATTRIBUTE name="root" type="INTEGER">0</ATTRIBUTE>
+                <ATTRIBUTE name="descendants" type="EXPRESSION">EXPR expr:(&quot;&quot;) val:&quot;&quot;</ATTRIBUTE>
+                <ATTRIBUTE name="ancestors" type="STRING">11409 </ATTRIBUTE>
+                <ATTRIBUTE name="fatherid" type="STRING">11409</ATTRIBUTE>
+                <ATTRIBUTE name="type" type="STRING">Mandatory</ATTRIBUTE>
+                </INSTANCE>
+                <INSTANCE id="obj.11611" class="Feature" name="Wide-Angle">
+                <ATTRIBUTE name="Position" type="STRING">NODE x:25.5cm y:14.5cm index:38</ATTRIBUTE>
+                <ATTRIBUTE name="External tool coupling" type="STRING"></ATTRIBUTE>
+                <ATTRIBUTE name="root" type="INTEGER">0</ATTRIBUTE>
+                <ATTRIBUTE name="descendants" type="EXPRESSION">EXPR expr:(&quot;&quot;) val:&quot;&quot;</ATTRIBUTE>
+                <ATTRIBUTE name="ancestors" type="STRING">11409 </ATTRIBUTE>
+                <ATTRIBUTE name="fatherid" type="STRING">11409</ATTRIBUTE>
+                <ATTRIBUTE name="type" type="STRING">Optional</ATTRIBUTE>
+                </INSTANCE>
+                <CONNECTOR id="con.11235" class="OR">
+                <FROM instance="Media" class="Feature"></FROM>
+                <TO instance="MP3" class="Feature"></TO>
+                <ATTRIBUTE name="Positions" type="STRING">EDGE 0 index:11</ATTRIBUTE>
+                </CONNECTOR>
+                <CONNECTOR id="con.11236" class="OR">
+                <FROM instance="Media" class="Feature"></FROM>
+                <TO instance="Camera" class="Feature"></TO>
+                <ATTRIBUTE name="Positions" type="STRING">EDGE 0 index:12</ATTRIBUTE>
+                </CONNECTOR>
+                <CONNECTOR id="con.11237" class="XOR">
+                <FROM instance="Screen" class="Feature"></FROM>
+                <TO instance="Basic" class="Feature"></TO>
+                <ATTRIBUTE name="Positions" type="STRING">EDGE 0 index:13</ATTRIBUTE>
+                </CONNECTOR>
+                <CONNECTOR id="con.11238" class="XOR">
+                <FROM instance="Screen" class="Feature"></FROM>
+                <TO instance="Color" class="Feature"></TO>
+                <ATTRIBUTE name="Positions" type="STRING">EDGE 0 index:14</ATTRIBUTE>
+                </CONNECTOR>
+                <CONNECTOR id="con.11239" class="XOR">
+                <FROM instance="Screen" class="Feature"></FROM>
+                <TO instance="High Res" class="Feature"></TO>
+                <ATTRIBUTE name="Positions" type="STRING">EDGE 0 index:15</ATTRIBUTE>
+                </CONNECTOR>
+                <CONNECTOR id="con.11243" class="Mandatory">
+                <FROM instance="Mobil Phone" class="Feature"></FROM>
+                <TO instance="Screen" class="Feature"></TO>
+                <ATTRIBUTE name="Positions" type="STRING">EDGE 0 index:16</ATTRIBUTE>
+                <ATTRIBUTE name="minCardinality" type="INTEGER">1</ATTRIBUTE>
+                <ATTRIBUTE name="maxCardinality" type="INTEGER">1</ATTRIBUTE>
+                </CONNECTOR>
+                <CONNECTOR id="con.11244" class="Mandatory">
+                <FROM instance="Mobil Phone" class="Feature"></FROM>
+                <TO instance="Call" class="Feature"></TO>
+                <ATTRIBUTE name="Positions" type="STRING">EDGE 0 index:17</ATTRIBUTE>
+                <ATTRIBUTE name="minCardinality" type="INTEGER">1</ATTRIBUTE>
+                <ATTRIBUTE name="maxCardinality" type="INTEGER">1</ATTRIBUTE>
+                </CONNECTOR>
+                <CONNECTOR id="con.11245" class="Optional">
+                <FROM instance="Mobil Phone" class="Feature"></FROM>
+                <TO instance="GPS" class="Feature"></TO>
+                <ATTRIBUTE name="Positions" type="STRING">EDGE 0 index:18</ATTRIBUTE>
+                <ATTRIBUTE name="minCardinality" type="INTEGER">0</ATTRIBUTE>
+                <ATTRIBUTE name="maxCardinality" type="INTEGER">1</ATTRIBUTE>
+                </CONNECTOR>
+                <CONNECTOR id="con.11247" class="Excludes">
+                <FROM instance="GPS" class="Feature"></FROM>
+                <TO instance="Basic" class="Feature"></TO>
+                <ATTRIBUTE name="Positions" type="STRING">EDGE 0 index:19</ATTRIBUTE>
+                </CONNECTOR>
+                <CONNECTOR id="con.11248" class="Optional">
+                <FROM instance="Mobil Phone" class="Feature"></FROM>
+                <TO instance="Media" class="Feature"></TO>
+                <ATTRIBUTE name="Positions" type="STRING">EDGE 0 index:20</ATTRIBUTE>
+                <ATTRIBUTE name="minCardinality" type="INTEGER">0</ATTRIBUTE>
+                <ATTRIBUTE name="maxCardinality" type="INTEGER">1</ATTRIBUTE>
+                </CONNECTOR>
+                <CONNECTOR id="con.11249" class="Requires">
+                <FROM instance="Camera" class="Feature"></FROM>
+                <TO instance="High Res" class="Feature"></TO>
+                <ATTRIBUTE name="Positions" type="STRING">EDGE 1 x1:16.5cm y1:8cm index:21</ATTRIBUTE>
+                </CONNECTOR>
+                <CONNECTOR id="con.11600" class="XOR">
+                <FROM instance="Single" class="Feature"></FROM>
+                <TO instance="Camera" class="Feature"></TO>
+                <ATTRIBUTE name="Positions" type="STRING">EDGE 0 index:31</ATTRIBUTE>
+                </CONNECTOR>
+                <CONNECTOR id="con.11601" class="XOR">
+                <FROM instance="Dual" class="Feature"></FROM>
+                <TO instance="Camera" class="Feature"></TO>
+                <ATTRIBUTE name="Positions" type="STRING">EDGE 0 index:32</ATTRIBUTE>
+                </CONNECTOR>
+                <CONNECTOR id="con.11602" class="XOR">
+                <FROM instance="4K" class="Feature"></FROM>
+                <TO instance="High Res" class="Feature"></TO>
+                <ATTRIBUTE name="Positions" type="STRING">EDGE 0 index:33</ATTRIBUTE>
+                </CONNECTOR>
+                <CONNECTOR id="con.11603" class="XOR">
+                <FROM instance="FULLHD" class="Feature"></FROM>
+                <TO instance="High Res" class="Feature"></TO>
+                <ATTRIBUTE name="Positions" type="STRING">EDGE 0 index:34</ATTRIBUTE>
+                </CONNECTOR>
+                <CONNECTOR id="con.11610" class="Mandatory">
+                <FROM instance="Dual" class="Feature"></FROM>
+                <TO instance="F1.7" class="Feature"></TO>
+                <ATTRIBUTE name="Positions" type="STRING">EDGE 0 index:37</ATTRIBUTE>
+                <ATTRIBUTE name="minCardinality" type="INTEGER">1</ATTRIBUTE>
+                <ATTRIBUTE name="maxCardinality" type="INTEGER">1</ATTRIBUTE>
+                </CONNECTOR>
+                <CONNECTOR id="con.11614" class="Optional">
+                <FROM instance="Dual" class="Feature"></FROM>
+                <TO instance="Wide-Angle" class="Feature"></TO>
+                <ATTRIBUTE name="Positions" type="STRING">EDGE 0 index:39</ATTRIBUTE>
+                <ATTRIBUTE name="minCardinality" type="INTEGER">0</ATTRIBUTE>
+                <ATTRIBUTE name="maxCardinality" type="INTEGER">1</ATTRIBUTE>
+                </CONNECTOR>
+                </MODEL>
+                </MODELS>
+                </ADOXML>
+                
+            </textarea>
+        </div>
+        
+        <div class="col">
+            <h4>JSON:</h4>
+            <textarea id="jsonArea" cols="55" rows="7"></textarea>
+        </div>
+        <div class="col">
+            <h4>JSON2:</h4>
+            <textarea id="jsonArea2" cols="55" rows="7"></textarea>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col text-center">
+            <div id="svgcanvas"></div> 
+            <svg id="svg" width="100" height="100"></svg>
+        </div>        
+    </div>
+</body>
+</html>

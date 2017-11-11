@@ -1,0 +1,12 @@
+.image td {
+    background-size: cover !important;
+    height: 100px;
+    width: 500px;
+    background-position:right;
+}
+tr {
+   td {
+      display: block;
+      max-width: 30% !important;
+   }
+}

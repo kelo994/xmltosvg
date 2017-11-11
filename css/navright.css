@@ -1,0 +1,12 @@
+#mySidebar{
+	height:100%;
+	position: absolute;
+}
+
+    section.sidebar {
+      width: 250px;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      background-color: green;
+    }

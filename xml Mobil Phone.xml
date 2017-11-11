@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ADOXML SYSTEM "adoxml31.dtd">
+<ADOXML version="3.1" date="04.10.2017" time="15:46" database="adb" username="user" adoversion="Version 5.1">
+<MODELS>
+<MODEL id="mod.11201" name="Feature Model - new" version="" modeltype="Feature Model" libtype="bp" applib="FMxx Dynamic Experimentation Library">
+<MODELATTRIBUTES>
+<ATTRIBUTE name="Version number" type="STRING"></ATTRIBUTE>
+<ATTRIBUTE name="Author" type="STRING">user</ATTRIBUTE>
+<ATTRIBUTE name="Creation date" type="STRING">04.10.2017, 15:40</ATTRIBUTE>
+<ATTRIBUTE name="Date last changed" type="STRING">04.10.2017, 15:45:05</ATTRIBUTE>
+<ATTRIBUTE name="Last user" type="STRING">user</ATTRIBUTE>
+<ATTRIBUTE name="Keywords" type="STRING"></ATTRIBUTE>
+<ATTRIBUTE name="Comment" type="STRING"></ATTRIBUTE>
+<ATTRIBUTE name="Model type" type="ENUMERATION">Current model</ATTRIBUTE>
+<ATTRIBUTE name="State" type="ENUMERATION">In process</ATTRIBUTE>
+<ATTRIBUTE name="Reviewed on" type="STRING"></ATTRIBUTE>
+<ATTRIBUTE name="Reviewed by" type="STRING"></ATTRIBUTE>
+<ATTRIBUTE name="Description" type="STRING"></ATTRIBUTE>
+<ATTRIBUTE name="Number of objects and relations" type="INTEGER">21</ATTRIBUTE>
+<ATTRIBUTE name="World area" type="STRING">w:26.96cm h:25cm minw:5cm minh:5cm</ATTRIBUTE>
+<ATTRIBUTE name="Grid" type="STRING"></ATTRIBUTE>
+<ATTRIBUTE name="Zoom" type="INTEGER">100</ATTRIBUTE>
+<ATTRIBUTE name="Viewable area" type="STRING">VIEW representation:graphic
+GRAPHIC x:-16 y:-16 w:1377 h:949 scale:1
+TABLE
+</ATTRIBUTE>
+<ATTRIBUTE name="Current mode" type="STRING"></ATTRIBUTE>
+<ATTRIBUTE name="Base name" type="STRING">Feature Model - new</ATTRIBUTE>
+<ATTRIBUTE name="Access state" type="ENUMERATION">write</ATTRIBUTE>
+<ATTRIBUTE name="Current page layout" type="STRING"></ATTRIBUTE>
+<ATTRIBUTE name="Connector marks" type="STRING"></ATTRIBUTE>
+<ATTRIBUTE name="Type" type="STRING">Feature Model</ATTRIBUTE>
+<ATTRIBUTE name="Change counter" type="INTEGER">281</ATTRIBUTE>
+<ATTRIBUTE name="Font size" type="INTEGER">0</ATTRIBUTE>
+<ATTRIBUTE name="Context of version" type="STRING"></ATTRIBUTE>
+<ATTRIBUTE name="Position" type="STRING"></ATTRIBUTE>
+<ATTRIBUTE name="External tool coupling" type="STRING"></ATTRIBUTE>
+<ATTRIBUTE name="__GfxThumb__" type="LONGSTRING">iVBORw0KGgoAAAANSUhEUgAAAQAAAADtCAIAAADfvTzZAAAACXBIWXMAAAsTAAALEwEAmpwYAAAIoUlEQVR4nO3d0ZKjKhSFYVJ1nlGfMXlJzgU1FK1EUdkEWP93MZXpjmA6eylGJS/vvQNU/ffrFQB+iQBAGgGANAIAaQQA0ggApBEASCMAkEYAII0AQBoBgDQCAGkEANIIwJHX62XR7Pv9XpbFomVcRQBOvN/vug2u61q3QTxBAM7V3VoTgK4QgBPrui7L8nq9wp1D6QPn3OZx/C1GQQDOhfqOxwPHVR5+mx48xP+SjQ4RgCKbms4+YfMg+1/0hgCciJ/YHFT2vvqJwSgIAKQRAEgjAJDGx3ZHjM4EB5wP7gEByHi9XrE6P59P4VLrul46bRzPiJGEX/L4J/5N3u/3+/3O/nb/8/QJB7/NCh2dtgw7HAM492+ok26/N5vksE+o3m/oZVmWz+ezrmvYJ7BDaEl6CBSH+LG4s5UXq/+4LtOB0z1huMXQqCXFAOzr3n0v/fi001p8HoAoTQIxMCUUgPK6j88/3jN8W6RivYahUXhMEixIBOB0iJ9dpHDDv1+qepkyNLIzcwAKh/jZpW5UvzMLQMTQqLoJA3B1qLNZ9uqwZ794g7pkaFTLPAF4Uvfu2YY/baRlOTI0em6GANwY4u9beLLh37TTvgoZGt02cADuDfGz7Tzc8G+a+mH9pUMjRxgKjHcm+OFQZ99UrervwbIs8byy/3cX2xwvzcgwAahY97HBKsOeVCc1F2IQXyCzGx0YIADPh/jZNmfa8Gd57z+fz7IsVy9TLTHN5C6dBiDdaNXdTpsOe0LjoTh6iFa6DsxulNVjAGod3WZbNh2lhMYtrhu1EP8amw9CpGY36jEAaRnVLdMGBRoHHnZdVJROeeT/Tv2iMpfR7TsJjNYn3hfy7ZaUKl1ke/zJ6y1fgdu+dRF63z/Y/PBSm8N5tAcwPbTKbkRr9RjbuTSWtdh1/HAw7csyMLenQ6Bv+/rNDvTbcHOjpBoOLtyPfPFshFfrb3+nWEkvFVcAdRkeA/hk4tgGNt35s8kMa3W6mTnUMzHoUAwD0Kz0N921DF5hLz+v/njDMTasApB9y+3qYN9ym5orGT3/vPq99+WTu6jp8WNQVHd65+fBsdwclzx8QwCknZ4V8X1c3WSHAOCkuCfPwO0zCEbrczz1WuMeG/RevgLVuS9z4B082XqV2ru/B/DND60u9Vj9Esjj3tPuNl1bXIz53NWLTfys+4Hf5s+Oa7jFcn83pfuuW65MoXur1OELeWjmY4A2lyWXbEp9Z5vP21cE9vZCnps2AL7tCG2UgkjP3IWzY77s8Caezw4ZKF+wc9MGwDUZfJdvSrvadlb5swx01feBmQNgbdDjyLjOl1bD70519/Banps5AKajoHu37HSSgSq9d/JaHpo5AM7+vRnuva+7UWh8oGWi9cdObTmbj+3c4Smk006rrJVRPRy8qMY9tjH5HsDC8/uVfaXBQ+PJTia7IS6YPAC+9j661t36tTLQeLKT6kM+AmCu4ntWd66KWhnYS2d/cX8/tKk7mJngZrf5A1D9ivYhDnz3t6p5m3tEN+nK3pztO74vdP4A1GIxoZDdTsAlxRf+a3SPaLZZo7BZmD8AVQ4D7OYStciAL7hRs25HB12HBx1u+4P5A+Ae15b1TLqm+wEckwhAlcMAqnNKUwVgM+RNB8HruoYp833B/FxpU3Ese3oYlzYbuztYZNNFnLmk29HCnOzOsbXn/o44fW4YGv89bWrzVzr9c+2febzI1ecfr2EtnAkemL+SgdOmNkP/06XSJ4QFjxfxudJ/vV6Flxn7ttfhXOquz7tAs6YKwIHbhwE9D/0br1t5d/18RcgplQBc9avvufBTfCLUeO/0hEoALr0lv/0GsTkyMMrKqwTAFb8lPXx/3ugZGGhCRZUAFL4lPVR/MHoGRqESgEv1RM09xDFAj07fld6+4HHoncAo6ywUAFcwS/jxc9obNAMcA/To4F3ps/qDQTMwCqEAuLMTNFRYLRwDjKS3of/eiDuBUVZVKAD+y21KvvZ3u1ts/wbaprqhjgEmuRq0/PVe3dink54badlFs7djlFnU59kDlFd2+TM3k3Y0mBhnjrl3/Dj7q3kC4JrMWjNHFw2MMf6ZLABZ2duySm4Ke9JFlfb3E4rsZ3mo+CoqGugYYP4ARJuJolzVGooFun/8JAybGzJdLlqFHYWnjVKX7bQ+6LDhzu7l87vKSH9V0uxpF/uW4+N7XXxb7exvD15Ounho3/qx956D4F74ggzU6iL7k9u9+KTK9zsr/z0De5tja58cpJ4+Tj87DjuZ+HP/95PltJdh9jOtE2fDWU6DPlMX9xaPpeK+BC/+cDjz7wHwkC/IwP6/oyAA0PbT/U81dn8fzgTPbZI9gLc/9ThHF9ioeT4IGM4kewDgHgIAaQQA0ggApBEASCMAkEYAII0AQBoBgDQCAGkEANIIAKQRAEgjAJBGACCNAEAaAYA0AgBpBADSCACkEQBIIwCQRgAgjQBAGgGANAIAaQQA0ggApBEASCMAkEYAII0AQBoBgDQCAGkEANIIAKQRAEgjAJBGACCNAEAaAYA0AgBpBADSCACkEQBIIwCQRgAgjQBAGgGANAIAaQQA0ggApBEASCMAkEYAII0AQBoBgDQCAGkEANIIAKQRAEgjAJBGACCNAEAaAYA0AgBpBADSCACkEQBIIwCQRgAgjQBAGgGANAIAaQQA0ggApBEASCMAkEYAII0AQBoBgDQCAGkEANIIAKQRAEgjAJBGACCNAEAaAYA0AgBpBADSCACkEQBIIwCQRgAgjQBAGgGANAIAaQQA0ggApBEASCMAkEYAII0AQBoBgDQCAGkEANIIAKQRAEgjAJBGACCNAEAaAYA0AgBpBADSCACkEQBIIwCQRgAgjQBAGgGANAIAaQQA0ggApBEASCMAkEYAII0AQBoBgDQCAGkEANIIAKQRAEgjAJBGACCNAEAaAYA0AgBpBADS/geRRTwYrozO3gAAAABJRU5ErkJggg==</ATTRIBUTE>
+</MODELATTRIBUTES>
+<INSTANCE id="obj.11203" class="Feature" name="Mobile Phone">
+<ATTRIBUTE name="Position" type="STRING">NODE x:11.5cm y:2cm index:1</ATTRIBUTE>
+<ATTRIBUTE name="External tool coupling" type="STRING"></ATTRIBUTE>
+<ATTRIBUTE name="root" type="INTEGER">0</ATTRIBUTE>
+<ATTRIBUTE name="descendants" type="EXPRESSION">EXPR expr:(&quot;&quot;) val:&quot;&quot;</ATTRIBUTE>
+<ATTRIBUTE name="ancestors" type="STRING"></ATTRIBUTE>
+<ATTRIBUTE name="fatherid" type="STRING">-1</ATTRIBUTE>
+<ATTRIBUTE name="type" type="STRING">normal</ATTRIBUTE>
+</INSTANCE>
+<INSTANCE id="obj.11206" class="Feature" name="Media">
+<ATTRIBUTE name="Position" type="STRING">NODE x:18.5cm y:4.5cm index:2</ATTRIBUTE>
+<ATTRIBUTE name="External tool coupling" type="STRING"></ATTRIBUTE>
+<ATTRIBUTE name="root" type="INTEGER">0</ATTRIBUTE>
+<ATTRIBUTE name="descendants" type="EXPRESSION">EXPR expr:(&quot;&quot;) val:&quot;&quot;</ATTRIBUTE>
+<ATTRIBUTE name="ancestors" type="STRING">11203 </ATTRIBUTE>
+<ATTRIBUTE name="fatherid" type="STRING">11203</ATTRIBUTE>
+<ATTRIBUTE name="type" type="STRING">Optional</ATTRIBUTE>
+</INSTANCE>
+<INSTANCE id="obj.11209" class="Feature" name="Screen">
+<ATTRIBUTE name="Position" type="STRING">NODE x:12cm y:5cm index:3</ATTRIBUTE>
+<ATTRIBUTE name="External tool coupling" type="STRING"></ATTRIBUTE>
+<ATTRIBUTE name="root" type="INTEGER">0</ATTRIBUTE>
+<ATTRIBUTE name="descendants" type="EXPRESSION">EXPR expr:(&quot;&quot;) val:&quot;&quot;</ATTRIBUTE>
+<ATTRIBUTE name="ancestors" type="STRING">11203 </ATTRIBUTE>
+<ATTRIBUTE name="fatherid" type="STRING">11203</ATTRIBUTE>
+<ATTRIBUTE name="type" type="STRING">Mandatory</ATTRIBUTE>
+</INSTANCE>
+<INSTANCE id="obj.11212" class="Feature" name="MP3">
+<ATTRIBUTE name="Position" type="STRING">NODE x:17cm y:7cm index:4</ATTRIBUTE>
+<ATTRIBUTE name="External tool coupling" type="STRING"></ATTRIBUTE>
+<ATTRIBUTE name="root" type="INTEGER">0</ATTRIBUTE>
+<ATTRIBUTE name="descendants" type="EXPRESSION">EXPR expr:(&quot;&quot;) val:&quot;&quot;</ATTRIBUTE>
+<ATTRIBUTE name="ancestors" type="STRING">11206 </ATTRIBUTE>
+<ATTRIBUTE name="fatherid" type="STRING">11206</ATTRIBUTE>
+<ATTRIBUTE name="type" type="STRING">OR</ATTRIBUTE>
+</INSTANCE>
+<INSTANCE id="obj.11215" class="Feature" name="Basic">
+<ATTRIBUTE name="Position" type="STRING">NODE x:8.5cm y:9.5cm index:5</ATTRIBUTE>
+<ATTRIBUTE name="External tool coupling" type="STRING"></ATTRIBUTE>
+<ATTRIBUTE name="root" type="INTEGER">0</ATTRIBUTE>
+<ATTRIBUTE name="descendants" type="EXPRESSION">EXPR expr:(&quot;&quot;) val:&quot;&quot;</ATTRIBUTE>
+<ATTRIBUTE name="ancestors" type="STRING">11209 </ATTRIBUTE>
+<ATTRIBUTE name="fatherid" type="STRING">11209</ATTRIBUTE>
+<ATTRIBUTE name="type" type="STRING">XOR</ATTRIBUTE>
+</INSTANCE>
+<INSTANCE id="obj.11218" class="Feature" name="Color">
+<ATTRIBUTE name="Position" type="STRING">NODE x:12cm y:9.5cm index:6</ATTRIBUTE>
+<ATTRIBUTE name="External tool coupling" type="STRING"></ATTRIBUTE>
+<ATTRIBUTE name="root" type="INTEGER">0</ATTRIBUTE>
+<ATTRIBUTE name="descendants" type="EXPRESSION">EXPR expr:(&quot;&quot;) val:&quot;&quot;</ATTRIBUTE>
+<ATTRIBUTE name="ancestors" type="STRING">11209 </ATTRIBUTE>
+<ATTRIBUTE name="fatherid" type="STRING">11209</ATTRIBUTE>
+<ATTRIBUTE name="type" type="STRING">XOR</ATTRIBUTE>
+</INSTANCE>
+<INSTANCE id="obj.11221" class="Feature" name="High Res">
+<ATTRIBUTE name="Position" type="STRING">NODE x:15.5cm y:9.5cm index:7</ATTRIBUTE>
+<ATTRIBUTE name="External tool coupling" type="STRING"></ATTRIBUTE>
+<ATTRIBUTE name="root" type="INTEGER">0</ATTRIBUTE>
+<ATTRIBUTE name="descendants" type="EXPRESSION">EXPR expr:(&quot;&quot;) val:&quot;&quot;</ATTRIBUTE>
+<ATTRIBUTE name="ancestors" type="STRING">11209 </ATTRIBUTE>
+<ATTRIBUTE name="fatherid" type="STRING">11209</ATTRIBUTE>
+<ATTRIBUTE name="type" type="STRING">XOR</ATTRIBUTE>
+</INSTANCE>
+<INSTANCE id="obj.11224" class="Feature" name="Camera">
+<ATTRIBUTE name="Position" type="STRING">NODE x:21cm y:7cm index:8</ATTRIBUTE>
+<ATTRIBUTE name="External tool coupling" type="STRING"></ATTRIBUTE>
+<ATTRIBUTE name="root" type="INTEGER">0</ATTRIBUTE>
+<ATTRIBUTE name="descendants" type="EXPRESSION">EXPR expr:(&quot;&quot;) val:&quot;&quot;</ATTRIBUTE>
+<ATTRIBUTE name="ancestors" type="STRING">11206 </ATTRIBUTE>
+<ATTRIBUTE name="fatherid" type="STRING">11206</ATTRIBUTE>
+<ATTRIBUTE name="type" type="STRING">OR</ATTRIBUTE>
+</INSTANCE>
+<INSTANCE id="obj.11227" class="Feature" name="Call">
+<ATTRIBUTE name="Position" type="STRING">NODE x:3.5cm y:5cm index:9</ATTRIBUTE>
+<ATTRIBUTE name="External tool coupling" type="STRING"></ATTRIBUTE>
+<ATTRIBUTE name="root" type="INTEGER">0</ATTRIBUTE>
+<ATTRIBUTE name="descendants" type="EXPRESSION">EXPR expr:(&quot;&quot;) val:&quot;&quot;</ATTRIBUTE>
+<ATTRIBUTE name="ancestors" type="STRING">11203 </ATTRIBUTE>
+<ATTRIBUTE name="fatherid" type="STRING">11203</ATTRIBUTE>
+<ATTRIBUTE name="type" type="STRING">Mandatory</ATTRIBUTE>
+</INSTANCE>
+<INSTANCE id="obj.11230" class="Feature" name="GPS">
+<ATTRIBUTE name="Position" type="STRING">NODE x:7.5cm y:5cm index:10</ATTRIBUTE>
+<ATTRIBUTE name="External tool coupling" type="STRING"></ATTRIBUTE>
+<ATTRIBUTE name="root" type="INTEGER">0</ATTRIBUTE>
+<ATTRIBUTE name="descendants" type="EXPRESSION">EXPR expr:(&quot;&quot;) val:&quot;&quot;</ATTRIBUTE>
+<ATTRIBUTE name="ancestors" type="STRING">11203 </ATTRIBUTE>
+<ATTRIBUTE name="fatherid" type="STRING">11203</ATTRIBUTE>
+<ATTRIBUTE name="type" type="STRING">Optional</ATTRIBUTE>
+</INSTANCE>
+<CONNECTOR id="con.11235" class="OR">
+<FROM instance="Media" class="Feature"></FROM>
+<TO instance="MP3" class="Feature"></TO>
+<ATTRIBUTE name="Positions" type="STRING">EDGE 0 index:11</ATTRIBUTE>
+</CONNECTOR>
+<CONNECTOR id="con.11236" class="OR">
+<FROM instance="Media" class="Feature"></FROM>
+<TO instance="Camera" class="Feature"></TO>
+<ATTRIBUTE name="Positions" type="STRING">EDGE 0 index:12</ATTRIBUTE>
+</CONNECTOR>
+<CONNECTOR id="con.11237" class="XOR">
+<FROM instance="Screen" class="Feature"></FROM>
+<TO instance="Basic" class="Feature"></TO>
+<ATTRIBUTE name="Positions" type="STRING">EDGE 0 index:13</ATTRIBUTE>
+</CONNECTOR>
+<CONNECTOR id="con.11238" class="XOR">
+<FROM instance="Screen" class="Feature"></FROM>
+<TO instance="Color" class="Feature"></TO>
+<ATTRIBUTE name="Positions" type="STRING">EDGE 0 index:14</ATTRIBUTE>
+</CONNECTOR>
+<CONNECTOR id="con.11239" class="XOR">
+<FROM instance="Screen" class="Feature"></FROM>
+<TO instance="High Res" class="Feature"></TO>
+<ATTRIBUTE name="Positions" type="STRING">EDGE 0 index:15</ATTRIBUTE>
+</CONNECTOR>
+<CONNECTOR id="con.11243" class="Mandatory">
+<FROM instance="Mobile Phone" class="Feature"></FROM>
+<TO instance="Screen" class="Feature"></TO>
+<ATTRIBUTE name="Positions" type="STRING">EDGE 0 index:16</ATTRIBUTE>
+<ATTRIBUTE name="minCardinality" type="INTEGER">1</ATTRIBUTE>
+<ATTRIBUTE name="maxCardinality" type="INTEGER">1</ATTRIBUTE>
+</CONNECTOR>
+<CONNECTOR id="con.11244" class="Mandatory">
+<FROM instance="Mobile Phone" class="Feature"></FROM>
+<TO instance="Call" class="Feature"></TO>
+<ATTRIBUTE name="Positions" type="STRING">EDGE 0 index:17</ATTRIBUTE>
+<ATTRIBUTE name="minCardinality" type="INTEGER">1</ATTRIBUTE>
+<ATTRIBUTE name="maxCardinality" type="INTEGER">1</ATTRIBUTE>
+</CONNECTOR>
+<CONNECTOR id="con.11245" class="Optional">
+<FROM instance="Mobile Phone" class="Feature"></FROM>
+<TO instance="GPS" class="Feature"></TO>
+<ATTRIBUTE name="Positions" type="STRING">EDGE 0 index:18</ATTRIBUTE>
+<ATTRIBUTE name="minCardinality" type="INTEGER">0</ATTRIBUTE>
+<ATTRIBUTE name="maxCardinality" type="INTEGER">1</ATTRIBUTE>
+</CONNECTOR>
+<CONNECTOR id="con.11247" class="Excludes">
+<FROM instance="GPS" class="Feature"></FROM>
+<TO instance="Basic" class="Feature"></TO>
+<ATTRIBUTE name="Positions" type="STRING">EDGE 0 index:20</ATTRIBUTE>
+</CONNECTOR>
+<CONNECTOR id="con.11248" class="Optional">
+<FROM instance="Mobile Phone" class="Feature"></FROM>
+<TO instance="Media" class="Feature"></TO>
+<ATTRIBUTE name="Positions" type="STRING">EDGE 0 index:21</ATTRIBUTE>
+<ATTRIBUTE name="minCardinality" type="INTEGER">0</ATTRIBUTE>
+<ATTRIBUTE name="maxCardinality" type="INTEGER">1</ATTRIBUTE>
+</CONNECTOR>
+<CONNECTOR id="con.11249" class="Requires">
+<FROM instance="Camera" class="Feature"></FROM>
+<TO instance="High Res" class="Feature"></TO>
+<ATTRIBUTE name="Positions" type="STRING">EDGE 1 x1:21cm y1:9.5cm index:22</ATTRIBUTE>
+</CONNECTOR>
+</MODEL>
+</MODELS>
+</ADOXML>
