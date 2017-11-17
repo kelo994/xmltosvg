@@ -23,7 +23,7 @@ function instancesvg (posicion){
     rect.setAttribute('fill','white');
     rect.setAttribute('stroke','black');
     rect.setAttribute('stroke-width','2');
-    rect.setAttribute('rx','2');
+    //rect.setAttribute('rx','2');
     rect.setAttribute('x',x);
     rect.setAttribute('y',y);
     return rect;
@@ -33,8 +33,8 @@ function textsvg(texto, posicion){
     let x = 55 * parseInt(posicion[1].split("cm"));
     let y = 55 * parseInt(posicion[2].split("cm"));
     var text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    text.setAttribute('x', x + 18);
-    text.setAttribute('y', y + 25);
+    text.setAttribute('x', x + 50);
+    text.setAttribute('y', y + 30);
     text.setAttribute('fill', 'black');
     text.textContent = texto;
     return text;
@@ -49,9 +49,9 @@ function linemo(posicionIni, posicionEnd, type){
     let y2 = 55 * parseInt(posicionE[2].split("cm"));
 
     var line = document.createElementNS('http://www.w3.org/2000/svg', 'line');  
-    line.setAttribute('x1', x1+50);
+    line.setAttribute('x1', x1+75);
     line.setAttribute('y1', y1+50);
-    line.setAttribute('x2', x2+50);
+    line.setAttribute('x2', x2+75);
     var optional = type.localeCompare("Optional");
     var mandatory = type.localeCompare("Mandatory");
     if ((optional==0)||(mandatory == 0)) {
@@ -254,18 +254,13 @@ function linexclude(posicionIni, posicionEnd, type){
     svgexclude.appendChild(arrow);
     return svgexclude;
 }
-    
-function arrow(posicionEnd){
-    
-    return line;
 
-}
 function circle(posicion, type){
     var pos = posicion.split(":");
     let x = 55 * parseInt(pos[1].split("cm"));
     let y = 55 * parseInt(pos[2].split("cm") );
     var circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    circle.setAttribute('cx', x+50);
+    circle.setAttribute('cx', x+75);
     circle.setAttribute('cy', y-10);
     circle.setAttribute('r', 10);  
     circle.setAttribute('stroke', "black");
@@ -276,9 +271,9 @@ function circle(posicion, type){
 
 function orxorsvg (xors){
     xors[1] += 50;
-    xors[0] += 50;
-    xors[2] += 50;
-    xors[4] += 50;
+    xors[0] += 75;
+    xors[2] += 75;
+    xors[4] += 75;
     var xls, xrs, ys;
     if(xors[3]<xors[5]){
         console.log("ylmenor");        
