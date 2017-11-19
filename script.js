@@ -67,33 +67,47 @@ function buildJson() {
                             orxor[1] = instances[j][4];
                             orxor[2] = instances[j][0];
                             orxor[3] = instances[j][1];
-                            if(or==0){
+                            if (or == 0) {
                                 orxor[4] = "white";
-                            }else{
+                            } else {
                                 orxor[4] = "black";
-                            }                            
+                            }
                             orxor[5] = false;
                             ors.push(orxor);
                         }
                         if (require == 0) {
-                            console.log("require: " + obj.ADOXML.MODELS.MODEL.CONNECTOR[i].ATTRIBUTE.__text);
                             var edges = obj.ADOXML.MODELS.MODEL.CONNECTOR[i].ATTRIBUTE.__text.split("x");
-                            console.log("require2: " + edges + " instances ini: " + instances[j][4] + " end: " + instances[j][1]);
-                            for (let i = 1; i < 6; i++) {
-
-                                if(i==1){
-                                    svg.appendChild(linerequire(instances[j][4], edges[i], 1));
-                                }else if(i==edges.length-1){
-                                    svg.appendChild(linerequire(edges[i-1], instances[j][1], 2));
-                                }else{
-                                    var pos = i-1;
-                                    svg.appendChild(linerequire(edges[pos], edges[i], instances[j][2]));
+                            if (edges.length <= 2) {
+                                svg.appendChild(linerequire(instances[j][4], instances[j][1], 2));
+                            } else {
+                                for (let i = 1; i < edges.length; i++) {
+                                    if (i == 1) {
+                                        svg.appendChild(linerequire(instances[j][4], edges[i], 1));
+                                    } else if (i == edges.length - 1) {
+                                        svg.appendChild(linerequire(edges[i - 1], instances[j][1], 2));
+                                    } else {
+                                        var pos = i - 1;
+                                        svg.appendChild(linerequire(edges[pos], edges[i], 0));
+                                    }
                                 }
-
-                            }   
-                            //svg.appendChild(arrow(instances[j][1]));
+                            }
                         }
-                        if ( exclude == 0) {
+                        if (exclude == 0) {
+                            var edges = obj.ADOXML.MODELS.MODEL.CONNECTOR[i].ATTRIBUTE.__text.split("x");
+                            if (edges.length <= 2) {
+                                svg.appendChild(linexclude(instances[j][4], instances[j][1], 3));
+                            } else {
+                                for (let i = 1; i < edges.length; i++) {
+                                    if (i == 1) {
+                                        svg.appendChild(linexclude(instances[j][4], edges[i], 1));
+                                    } else if (i == edges.length - 1) {
+                                        svg.appendChild(linexclude(edges[i - 1], instances[j][1], 2));
+                                    } else {
+                                        var pos = i - 1;
+                                        svg.appendChild(linexclude(edges[pos], edges[i], 0));
+                                    }
+                                }
+                            }
                             //svg.appendChild(linexclude(instances[j][4], instances[j][1], instances[j][2]));
                             //svg.appendChild(arrow(instances[j][1]));
                         }
@@ -102,8 +116,8 @@ function buildJson() {
                 info += instances[j][0] + " p: " + instances[j][1] + " t: " + instances[j][2] + " f: " + instances[j][3] + "p2: " + instances[j][4] + " /// ";
             }
         }
-    }var cont = 0;
-    for (var i = 0; i < ors.length; i++) {        
+    } var cont = 0;
+    for (var i = 0; i < ors.length; i++) {
         if (ors[i][5] == false) {
             console.log(ors);
             var poligono = new Array();
@@ -119,8 +133,8 @@ function buildJson() {
             poligono[6] = ors[i][4];
             ors[i][5] = true;
             var firstElement = false;
-            for (var j = 0; j < ors.length; j++) {                
-                if (ors[j][5] == false || j <=20000) {
+            for (var j = 0; j < ors.length; j++) {
+                if (ors[j][5] == false || j <= 20000) {
                     var flag = ors[i][0].localeCompare(ors[j][0]);
                     if (flag == 0) {
                         ors[j][5] = true;
@@ -140,29 +154,29 @@ function buildJson() {
                             if (poligono[4] < x1) {
                                 poligono[4] = x1;
                             }
-                        }else{
+                        } else {
                             poligono[2] = x1;
                             poligono[3] = y1;
                             poligono[4] = x1;
                             poligono[5] = y1;
                             poligono[6] = ors[i][4];
-                            firstElement = true;                            
-                        }                        
+                            firstElement = true;
+                        }
                     }
                 }
-                if(j == (ors.length-1)){
+                if (j == (ors.length - 1)) {
                     cont++;
                     console.log("conteo: " + cont)
                     xors.push(poligono);
                 }
             }
             //console.log(poligono);
-            
+
         }
     }
     console.log(xors);
     for (var i = 0; i < xors.length; i++) {
-       svg.appendChild(orxorsvg(xors[i]));
+        svg.appendChild(orxorsvg(xors[i]));
     }
     svgPrint.appendChild(svg);
     $("#jsonArea2").val(info);
