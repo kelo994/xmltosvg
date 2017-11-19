@@ -59,13 +59,50 @@ function linemo(posicionIni, posicionEnd, type){
     line.setAttribute('stroke', "black");
     return line;
 }
-var a = 0;
+
+function flecha(xIni, yIni, xEnd, yEnd){
+    var px1, py1, px2, py2;
+    if(yIni<yEnd){
+        if(xIni<xEnd){
+            px1 = (xEnd - ((xEnd - xIni)*0.1))-((xEnd - xIni)*0.1);
+            px2 = (xEnd - ((xEnd - xIni)*0.1))+((xEnd - xIni)*0.1);
+        }else if(xEnd<xIni){
+            px1 = (xEnd + ((xIni - xEnd)*0.1))-((xIni - xEnd)*0.1);
+            px2 = (xEnd + ((xIni - xEnd)*0.1))+((xIni - xEnd)*0.1);
+        }else{
+            px1 = xIni - xIni * 0.1;
+            px2 = xIni + xIni * 0.1;
+        }
+        py1 = yEnd - ((yEnd - yIni)*0.1);
+        py2 = yEnd - ((yEnd - yIni)*0.1);   
+    }else{
+        if(xIni<xEnd){
+            px1 = (xEnd - ((xEnd - xIni)*0.1))-((xEnd - xIni)*0.1);
+            px2 = (xEnd - ((xEnd - xIni)*0.1))+((xEnd - xIni)*0.1);
+        }else if(xEnd<xIni){
+            px1 = (xEnd + ((xIni - xEnd)*0.1))-((xIni - xEnd)*0.1);
+            px2 = (xEnd + ((xIni - xEnd)*0.1))+((xIni - xEnd)*0.1);
+        }else{
+            px1 = xIni - xIni * 0.1;
+            px2 = xIni + xIni * 0.1;
+        }
+        py1 = yEnd + ((yIni - yEnd)*0.1);
+        py2 = yEnd + ((yIni - yEnd)*0.1);        
+    }
+
+    var arrow = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');  
+    arrow.setAttribute('stroke-linejoin', 'miter');
+    arrow.setAttribute('points', px1 + ',' + py1 + ' ' + xEnd + ',' + yEnd + ' ' + px2 + ',' + py2);
+    arrow.setAttribute('stroke', "black");
+    arrow.setAttribute('stroke-width', 5);
+    arrow.setAttribute('fill', "none");
+    return arrow;
+}
 function linerequire(posicionIni, posicionEnd, flag){
     var svgrequire = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svgrequire.setAttribute('xlink', 'http://www.w3.org/1999/xlink');
     
-    var posicionI = posicionIni.split(":");
-    
+    var posicionI = posicionIni.split(":");    
     let x1 = 55 * parseInt(posicionI[1].split("cm"));
     let y1 = (55 * parseInt(posicionI[2].split("cm") ));
     var posicionE = posicionEnd.split(":");
@@ -87,6 +124,7 @@ function linerequire(posicionIni, posicionEnd, flag){
         }else{
             x2 += 75;
         }
+        svgrequire.appendChild(flecha(x1, y1, x2, y2));
     }
     line.setAttribute('x1', x1);
     line.setAttribute('y1', y1);      
@@ -95,63 +133,7 @@ function linerequire(posicionIni, posicionEnd, flag){
     line.setAttribute('stroke-width', 5);
     line.setAttribute('stroke', "black");
     line.setAttribute('stroke-dasharray', "5,5");
-    svgrequire.appendChild(line);
-    a++;
-    console.log(a + " xy1: " + x1 + "," + y1 + " xy2: " + x2 + "," + y2);
-    
-    var arrow1x = 0;
-    var arrow1y = 0;
-    var punta = 0;
-    var arrow2x = 0;
-    var arrow2y = 0;
-    svgrequire.setAttribute('width',parseInt(x1)*70);
-    svgrequire.setAttribute('height',parseInt(y1)*70);
-    if(y2!=y1){
-        //require hacia arriba
-    }else{    
-        if(x2<x1 && x1<(x2+150)){
-            x1 = ((x2+150)-x1)/3+x1;
-            x2 = x1;
-            arrow1x = x1-10;
-            arrow1y = y2 - (y2 - y1)*0.1;
-            arrow2x = x1+10;
-            arrow2y = y2 - (y2 - y1)*0.1;
-        }else if (x2<(x1+150) && (x1+150)<(x2+150)) {
-            x1 = ((x1+150)-x2)/3+x2;
-            x2 = x1;
-            arrow1x = x1-10;
-            arrow1y = y2 - (y2 - y1)*0.1;
-            arrow2x = x1+10;
-            arrow2y = y2 - (y2 - y1)*0.1;
-        } else if(x1>x2){
-            console.log("mayor x1: " + x1 + " x2: " + x2);
-            x1+= 20;
-            x2+= 140;
-            arrow1x = ((x1-x2)*0,8)+x2;
-            arrow1y = y2 - (y2 - y1)*0.2;
-            arrow2x = ((x1-x2)*0,9)+x2;
-            arrow2y = y2 + (y2 - y1)*0.2;
-            console.log("y: " + y1 + " " + y2 + " " + arrow2y);
-        }else{
-            console.log("x1: " + x1 + " x2: " + x2);
-            x1+= 140;
-            x2+= 20;
-            arrow1x = ((x2-x1)*0,8)+x2;
-            arrow1y = y2 - (y2 - y1)*0.2;
-            arrow2x = ((x1-x2)*0,9)+x2;
-            arrow2y = y2 + (y2 - y1)*0.2;
-        }
-    }   
-
-    
-    var arrow = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');  
-    arrow.setAttribute('stroke-linejoin', 'miter');
-    arrow.setAttribute('points', arrow1x + ',' + arrow1y + ' ' + x2 + ',' + y2 + ' ' + arrow2x + ',' + arrow2y);
-    arrow.setAttribute('stroke', "black");
-    arrow.setAttribute('stroke-width', 5);
-    arrow.setAttribute('fill', "none");
-    //svgrequire.appendChild(arrow);
-    
+    svgrequire.appendChild(line);    
     return svgrequire;
 }
 
@@ -319,3 +301,5 @@ function orxorsvg (xors){
     polygon.setAttribute('fill', xors[6]);
     return polygon;
 }
+
+
