@@ -1,18 +1,18 @@
-
-
 function buildsvg (size){
     dimension = size.split(":");
     let xd = dimension[1].split("y");
     let yd = dimension[2].split("w");
     let wd = dimension[3].split("h");
     let hd = dimension[4].split("scale");
-    svg.setAttribute('width',parseInt(wd[0])*55);
+    svg.setAttribute('width',parseInt(wd[0])*100);
     svg.setAttribute('height',parseInt(hd[0])*55);
-    svg.setAttribute('x',parseInt(xd[0])*55);
-    svg.setAttribute('y',parseInt(yd[0])*55);
+    svg.setAttribute('x',parseInt(xd[0]));
+    svg.setAttribute('y',parseInt(yd[0]));
     return svg;
 }
-function instancesvg (posicion){
+//instancias
+function instancesvg (posicion, texto){
+    var instances = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     posicion = posicion.split(":");
     let x = 55 * parseInt(posicion[1].split("cm"));
     let y = 55 * parseInt(posicion[2].split("cm"));
@@ -23,22 +23,18 @@ function instancesvg (posicion){
     rect.setAttribute('fill','white');
     rect.setAttribute('stroke','black');
     rect.setAttribute('stroke-width','2');
-    //rect.setAttribute('rx','2');
     rect.setAttribute('x',x);
     rect.setAttribute('y',y);
-    return rect;
-}
-function textsvg(texto, posicion){
-    posicion = posicion.split(":");
-    let x = 55 * parseInt(posicion[1].split("cm"));
-    let y = 55 * parseInt(posicion[2].split("cm"));
+    instances.appendChild(rect);
     var text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    text.setAttribute('x', x + 50);
+    text.setAttribute('x', x + 30);
     text.setAttribute('y', y + 30);
     text.setAttribute('fill', 'black');
     text.textContent = texto;
-    return text;
+    instances.appendChild(text);
+    return instances;
 }
+
 
 function linemo(posicionIni, posicionEnd, type){
     var posicionI = posicionIni.split(":");
@@ -63,27 +59,54 @@ function linemo(posicionIni, posicionEnd, type){
     line.setAttribute('stroke', "black");
     return line;
 }
-
-function linerequire(posicionIni, posicionEnd, type){
+var a = 0;
+function linerequire(posicionIni, posicionEnd, flag){
     var svgrequire = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svgrequire.setAttribute('xlink', 'http://www.w3.org/1999/xlink');
     
     var posicionI = posicionIni.split(":");
+    
     let x1 = 55 * parseInt(posicionI[1].split("cm"));
-    let y1 = (55 * parseInt(posicionI[2].split("cm") ))+50;
+    let y1 = (55 * parseInt(posicionI[2].split("cm") ));
     var posicionE = posicionEnd.split(":");
     let x2 = 55 * parseInt(posicionE[1].split("cm"));
     let y2 = (55 * parseInt(posicionE[2].split("cm")));
     var line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    if(flag==1){
+        if(y1<y2){
+            x1 += 75;
+            y1 += 50;
+        }else{
+            x1 += 75;
+        }
+    }
+    if(flag==2){
+        if(y2<y1){
+            x2 += 75;
+            y2 += 50;
+        }else{
+            x2 += 75;
+        }
+    }
+    line.setAttribute('x1', x1);
+    line.setAttribute('y1', y1);      
+    line.setAttribute('x2', x2);  
+    line.setAttribute('y2', y2);
+    line.setAttribute('stroke-width', 5);
+    line.setAttribute('stroke', "black");
+    line.setAttribute('stroke-dasharray', "5,5");
+    svgrequire.appendChild(line);
+    a++;
+    console.log(a + " xy1: " + x1 + "," + y1 + " xy2: " + x2 + "," + y2);
     
     var arrow1x = 0;
     var arrow1y = 0;
     var punta = 0;
     var arrow2x = 0;
     var arrow2y = 0;
-    svgrequire.setAttribute('width',parseInt(x1)*55);
-    svgrequire.setAttribute('height',parseInt(y1)*55);
-    if(y2<y1){
+    svgrequire.setAttribute('width',parseInt(x1)*70);
+    svgrequire.setAttribute('height',parseInt(y1)*70);
+    if(y2!=y1){
         //require hacia arriba
     }else{    
         if(x2<x1 && x1<(x2+150)){
@@ -119,24 +142,15 @@ function linerequire(posicionIni, posicionEnd, type){
             arrow2y = y2 + (y2 - y1)*0.2;
         }
     }   
-    /**/
 
-    line.setAttribute('x1', x1);
-    line.setAttribute('x2', x2);
-    line.setAttribute('y1', y1);    
-    line.setAttribute('y2', y2);
-    line.setAttribute('stroke-width', 5);
-    line.setAttribute('stroke', "black");
-    line.setAttribute('stroke-dasharray', "5,5");
-    svgrequire.appendChild(line);
-
+    
     var arrow = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');  
     arrow.setAttribute('stroke-linejoin', 'miter');
     arrow.setAttribute('points', arrow1x + ',' + arrow1y + ' ' + x2 + ',' + y2 + ' ' + arrow2x + ',' + arrow2y);
     arrow.setAttribute('stroke', "black");
     arrow.setAttribute('stroke-width', 5);
     arrow.setAttribute('fill', "none");
-    svgrequire.appendChild(arrow);
+    //svgrequire.appendChild(arrow);
     
     return svgrequire;
 }

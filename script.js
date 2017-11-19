@@ -20,7 +20,6 @@ function buildJson() {
     sizeSVG = sizeSVG[1].split("TABLE");
     info = "Tamaño modelo: " + sizeSVG[0] + "Instances: ";
     var tamañossss = sizeSVG[0];
-    console.log("sizeee: " + sizeSVG[0]);
     svg = buildsvg("x:1 y:1 w:30 h:20 scale:1");
     svgPrint.innerHTML = "";
     //Instances
@@ -32,8 +31,8 @@ function buildJson() {
         posicion = posicion.split("E ");
         posicion = posicion[1].split("index");
         instances[i][1] = posicion[0];
-        svg.appendChild(instancesvg(instances[i][1]));
-        svg.appendChild(textsvg(instances[i][0], instances[i][1]));
+        svg.appendChild(instancesvg(instances[i][1], instances[i][0]));
+        //svg.appendChild(textsvg(, instances[i][1]));
         //svgPrint.appendChild(svg);
     }
     for (var i = 0; i < obj.ADOXML.MODELS.MODEL.CONNECTOR.length; i++) {
@@ -77,11 +76,25 @@ function buildJson() {
                             ors.push(orxor);
                         }
                         if (require == 0) {
-                            svg.appendChild(linerequire(instances[j][4], instances[j][1], instances[j][2]));
+                            console.log("require: " + obj.ADOXML.MODELS.MODEL.CONNECTOR[i].ATTRIBUTE.__text);
+                            var edges = obj.ADOXML.MODELS.MODEL.CONNECTOR[i].ATTRIBUTE.__text.split("x");
+                            console.log("require2: " + edges + " instances ini: " + instances[j][4] + " end: " + instances[j][1]);
+                            for (let i = 1; i < 6; i++) {
+
+                                if(i==1){
+                                    svg.appendChild(linerequire(instances[j][4], edges[i], 1));
+                                }else if(i==edges.length-1){
+                                    svg.appendChild(linerequire(edges[i-1], instances[j][1], 2));
+                                }else{
+                                    var pos = i-1;
+                                    svg.appendChild(linerequire(edges[pos], edges[i], instances[j][2]));
+                                }
+
+                            }   
                             //svg.appendChild(arrow(instances[j][1]));
                         }
                         if ( exclude == 0) {
-                            svg.appendChild(linexclude(instances[j][4], instances[j][1], instances[j][2]));
+                            //svg.appendChild(linexclude(instances[j][4], instances[j][1], instances[j][2]));
                             //svg.appendChild(arrow(instances[j][1]));
                         }
                     }
