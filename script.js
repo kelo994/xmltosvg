@@ -5,10 +5,18 @@ var instances;
 var ors = [];
 var xors = [];
 var svgPrint = document.getElementById('svgcanvas');
-
 var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
 svg.setAttribute('xlink', 'http://www.w3.org/1999/xlink');
 
+var openFile = function(event) {
+    var input = event.target;
+    var reader = new FileReader();
+    reader.onload = function(){
+        text = reader.result;
+        $("#xmlArea").val(text);
+    }
+    reader.readAsText(input.files[0]);
+}
 function buildJson() {
     $("#jsonArea2").val("Cargando...");
     var xml = JSON.stringify(x2js.xml_str2json($("#xmlArea").val()));
@@ -76,7 +84,7 @@ function buildJson() {
                             ors.push(orxor);
                         }
                         if (require == 0) {
-                            var edges = obj.ADOXML.MODELS.MODEL.CONNECTOR[i].ATTRIBUTE.__text.split("x");
+                            let edges = obj.ADOXML.MODELS.MODEL.CONNECTOR[i].ATTRIBUTE.__text.split("x");
                             if (edges.length <= 2) {
                                 svg.appendChild(linerequire(instances[j][4], instances[j][1], 2));
                             } else {
@@ -93,7 +101,7 @@ function buildJson() {
                             }
                         }
                         if (exclude == 0) {
-                            var edges = obj.ADOXML.MODELS.MODEL.CONNECTOR[i].ATTRIBUTE.__text.split("x");
+                            let edges = obj.ADOXML.MODELS.MODEL.CONNECTOR[i].ATTRIBUTE.__text.split("x");
                             if (edges.length <= 2) {
                                 svg.appendChild(linexclude(instances[j][4], instances[j][1], 3));
                             } else {
